@@ -1,22 +1,30 @@
+import { useState } from "react";
 import styled from "styled-components";
 import trackit from "../../assets/images/trackit.png";
+import Loading from "../../assets/styles/ThreeDots";
 
-function LoginPage() {
+function LogInPage() {
+  const [logInButton, setLogInButton] = useState(false)
   return (
     <PageContainer>
       <Logo>
         <img src={trackit} alt="TrackIt" />
         <h1>TrackIt</h1>
       </Logo>
-      <input placeholder="email"></input>
-      <input placeholder="senha"></input>
-      <button>Entrar</button>
+      <input placeholder="email" disabled={logInButton}></input>
+      <input placeholder="senha" disabled={logInButton}></input>
+      {logInButton === false ?
+        <button disabled={logInButton}>Entrar</button> :
+      <button disabled={logInButton}>
+        <Loading />
+      </button>
+      }
       <SingInText>Não tem uma conta? Cadastre-se!</SingInText>
     </PageContainer>
   );
 }
 
-export default LoginPage;
+export default LogInPage;
 
 const PageContainer = styled.div`
   display: flex;
@@ -40,8 +48,9 @@ const Logo = styled.div`
 `;
 
 const SingInText = styled.p`
-  font-family: 'Lexend Deca', sans-serif;
+  font-family: "Lexend Deca", sans-serif;
   font-weight: 400;
   font-size: 14px;
   color: #52b6ff;
+  text-decoration: underline;
 `;

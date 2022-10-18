@@ -78,6 +78,9 @@ button {
     font-size: 21px;
     color: #FFFFFF;
 	background-color: #52B6FF;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	&:hover {
 		cursor: pointer;
 	}

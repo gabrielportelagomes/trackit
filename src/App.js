@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
-import LoginPage from "./pages/LoginPage/LoginPage";
+import LogInPage from "./pages/LogInPage/LogInPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <GlobalStyle />
       <ScreenContainer>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LogInPage />} />
+          <Route path="/cadastro" element={<SignUpPage />} />
         </Routes>
       </ScreenContainer>
     </BrowserRouter>
@@ -24,5 +26,5 @@ const ScreenContainer = styled.div`
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 `;
