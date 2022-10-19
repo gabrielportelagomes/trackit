@@ -5,26 +5,32 @@ import trackit from "../../assets/images/trackit.png";
 import Loading from "../../assets/styles/ThreeDots";
 import URL from "../../constants/url";
 import axios from "axios";
+import { useAuth } from "../../providers/auth";
 
-function LogInPage() {
-  const [logInButton, setLogInButton] = useState(false);
-  const [logInForm, setLogInForm] = useState({ email: "", password: "" });
+function LoginPage() {
+  const [loginButton, setLoginButton] = useState(false);
+  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const { setUserLogin } = useAuth();
 
   function handleForm(event) {
     const { name, value } = event.target;
-    setLogInForm({ ...logInForm, [name]: value });
+    setLoginForm({ ...loginForm, [name]: value });
   }
 
   function signIn(event) {
     event.preventDefault();
-    setLogInButton(true);
+    setLoginButton(true);
 
-    const promise = axios.post(`${URL}/auth/login`, logInForm);
-    promise.then(() => navigate("/hoje"));
+    const promise = axios.post(`${URL}/auth/login`, loginForm);
+    promise.then((response) => {
+      setUserLogin(response.data);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      navigate("/hoje");
+    });
     promise.catch((error) => {
       alert(error.response.data.message);
-      setLogInButton(false);
+      setLoginButton(false);
     });
   }
 
@@ -37,33 +43,33 @@ function LogInPage() {
       <FormContainer onSubmit={signIn}>
         <Input
           name="email"
-          value={logInForm.email}
+          value={loginForm.email}
           onChange={handleForm}
           type="email"
           placeholder="email"
-          disabled={logInButton}
+          disabled={loginButton}
           required
         ></Input>
         <Input
           name="password"
-          value={logInForm.password}
+          value={loginForm.password}
           onChange={handleForm}
           type="password"
           placeholder="senha"
-          disabled={logInButton}
+          disabled={loginButton}
           required
         ></Input>
-        {logInButton === false ? (
-          <Button type="submit" disabled={logInButton}>
+        {loginButton === false ? (
+          <Button type="submit" disabled={loginButton}>
             Entrar
           </Button>
         ) : (
-          <Button disabled={logInButton}>
+          <Button disabled={loginButton}>
             <Loading />
           </Button>
         )}
       </FormContainer>
-      {logInButton === false ? (
+      {loginButton === false ? (
         <Link to="/cadastro">
           <SignInText>Não tem uma conta? Cadastre-se!</SignInText>
         </Link>
@@ -74,7 +80,7 @@ function LogInPage() {
   );
 }
 
-export default LogInPage;
+export default LoginPage;
 
 const PageContainer = styled.div`
   display: flex;
