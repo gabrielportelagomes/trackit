@@ -52,39 +52,6 @@ table {
 * {
 	box-sizing: border-box;
 }
-input {
-	width: 303px;
-	height: 45px;
-	border: solid 1px #D4D4D4;
-	border-radius: 5px;
-	margin-bottom: 6px;
-	font-family: 'Lexend Deca', sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    color: #666666;
-	padding: 11px;
-	&::placeholder {
-    	color: #DBDBDB;
-	}
-}
-button {
-	width: 303px;
-	height: 45px;
-	border: solid 1px #52B6FF;
-	border-radius: 5px;
-	margin-bottom: 25px;
-	font-family: 'Lexend Deca', sans-serif;
-    font-weight: 400;
-    font-size: 21px;
-    color: #FFFFFF;
-	background-color: #52B6FF;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	&:hover {
-		cursor: pointer;
-	}
-}
 `;
 
 export default GlobalStyle;
