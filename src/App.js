@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import LogInPage from "./pages/LogInPage/LogInPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import TodayPage from "./pages/TodayPage/TodayPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LogInPage />} />
           <Route path="/cadastro" element={<SignUpPage />} />
+          <Route path="/hoje" element={<TodayPage />} />
         </Routes>
       </ScreenContainer>
     </BrowserRouter>

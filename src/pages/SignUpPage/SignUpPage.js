@@ -11,7 +11,7 @@ Modal.setAppElement("#root");
 
 function SignUpPage() {
   const [signUpButton, setSignUpButton] = useState(false);
-  const [form, setForm] = useState({
+  const [signUpForm, setSignUpForm] = useState({
     email: "",
     name: "",
     image: "",
@@ -23,7 +23,7 @@ function SignUpPage() {
 
   function handleForm(event) {
     const { name, value } = event.target;
-    setForm({ ...form, [name]: value });
+    setSignUpForm({ ...signUpForm, [name]: value });
   }
 
   function closeModal() {
@@ -35,7 +35,7 @@ function SignUpPage() {
     event.preventDefault();
     setSignUpButton(true);
 
-    const promise = axios.post(`${URL}/auth/sign-up`, form);
+    const promise = axios.post(`${URL}/auth/sign-up`, signUpForm);
     promise.then(() => navigate("/"));
     promise.catch((error) => {
       setIsOpen(true);
@@ -52,7 +52,7 @@ function SignUpPage() {
       <FormContainer onSubmit={signUp}>
         <Input
           name="email"
-          value={form.email}
+          value={signUpForm.email}
           onChange={handleForm}
           type="email"
           placeholder="email"
@@ -61,7 +61,7 @@ function SignUpPage() {
         ></Input>
         <Input
           name="password"
-          value={form.password}
+          value={signUpForm.password}
           onChange={handleForm}
           type="password"
           placeholder="senha"
@@ -70,7 +70,7 @@ function SignUpPage() {
         ></Input>
         <Input
           name="name"
-          value={form.name}
+          value={signUpForm.name}
           onChange={handleForm}
           type="text"
           placeholder="nome"
@@ -79,7 +79,7 @@ function SignUpPage() {
         ></Input>
         <Input
           name="image"
-          value={form.image}
+          value={signUpForm.image}
           onChange={handleForm}
           type="url"
           placeholder="foto"
@@ -96,9 +96,13 @@ function SignUpPage() {
           </Button>
         )}
       </FormContainer>
-      <Link to="/">
+      {signUpButton === false ? (
+        <Link to="/">
+          <LogInText>Já tem uma conta? Faça login!</LogInText>
+        </Link>
+      ) : (
         <LogInText>Já tem uma conta? Faça login!</LogInText>
-      </Link>
+      )}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

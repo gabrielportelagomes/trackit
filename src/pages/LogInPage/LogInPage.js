@@ -1,28 +1,75 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import trackit from "../../assets/images/trackit.png";
 import Loading from "../../assets/styles/ThreeDots";
+import URL from "../../constants/url";
+import axios from "axios";
 
 function LogInPage() {
   const [logInButton, setLogInButton] = useState(false);
+  const [logInForm, setLogInForm] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
+
+  function handleForm(event) {
+    const { name, value } = event.target;
+    setLogInForm({ ...logInForm, [name]: value });
+  }
+
+  function signIn(event) {
+    event.preventDefault();
+    setLogInButton(true);
+
+    const promise = axios.post(`${URL}/auth/login`, logInForm);
+    promise.then(() => navigate("/hoje"));
+    promise.catch((error) => {
+      alert(error.response.data.message);
+      setLogInButton(false);
+    });
+  }
+
   return (
     <PageContainer>
       <Logo>
         <img src={trackit} alt="TrackIt" />
         <h1>TrackIt</h1>
       </Logo>
-      <FormContainer>
-        <Input placeholder="email" disabled={logInButton}></Input>
-        <Input placeholder="senha" disabled={logInButton}></Input>
+      <FormContainer onSubmit={signIn}>
+        <Input
+          name="email"
+          value={logInForm.email}
+          onChange={handleForm}
+          type="email"
+          placeholder="email"
+          disabled={logInButton}
+          required
+        ></Input>
+        <Input
+          name="password"
+          value={logInForm.password}
+          onChange={handleForm}
+          type="password"
+          placeholder="senha"
+          disabled={logInButton}
+          required
+        ></Input>
         {logInButton === false ? (
-          <Button disabled={logInButton}>Entrar</Button>
+          <Button type="submit" disabled={logInButton}>
+            Entrar
+          </Button>
         ) : (
           <Button disabled={logInButton}>
             <Loading />
           </Button>
         )}
       </FormContainer>
-      <SignInText>Não tem uma conta? Cadastre-se!</SignInText>
+      {logInButton === false ? (
+        <Link to="/cadastro">
+          <SignInText>Não tem uma conta? Cadastre-se!</SignInText>
+        </Link>
+      ) : (
+        <SignInText>Não tem uma conta? Cadastre-se!</SignInText>
+      )}
     </PageContainer>
   );
 }
