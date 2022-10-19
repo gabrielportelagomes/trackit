@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import trackit from "../../assets/images/trackit.png";
-import Loading from "../../assets/styles/ThreeDots";
+import Loading from "../../assets/styles/Loading";
 import URL from "../../constants/url";
 import axios from "axios";
 import Modal from "react-modal";
