@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import TopBar from "./components/TopBar";
+import HabitsPage from "./pages/HabitsPage/HabitsPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import TodayPage from "./pages/TodayPage/TodayPage";
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/cadastro" element={<SignUpPage />} />
           <Route path="/hoje" element={<TodayPage />} />
+          <Route path="/habitos" element={<HabitsPage />} />
         </Routes>
       </ScreenContainer>
     </BrowserRouter>
