@@ -15,15 +15,14 @@ function TopBar() {
 export default TopBar;
 
 const TopContainer = styled.div`
-  width: 100%;
+  width: 375px;
   height: 70px;
   background-color: #126ba5;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
-  left: 0;
-  top: 0;
+  position: absolute;
+  
 `;
 
 const Logo = styled.p`
