@@ -4,28 +4,35 @@ import {
   buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { Link } from "react-router-dom";
 
 function Menu() {
   const percentage = 0;
   return (
     <MenuContainer>
-      <Option>Hábitos</Option>
-      <Teste>
-        <CircularProgressbarWithChildren
-          value={percentage}
-          background
-          backgroundPadding={6}
-          width="81px"
-          styles={buildStyles({
-            backgroundColor: "#52B6FF",
-            pathColor: "#fff",
-            trailColor: "transparent",
-          })}
-        >
-          <TextCicularProgress>Hoje</TextCicularProgress>
-        </CircularProgressbarWithChildren>
-      </Teste>
-      <Option>Histórico</Option>
+      <Link to="/habitos">
+        <Option>Hábitos</Option>
+      </Link>
+      <ProgressContainer>
+        <Link to="/hoje">
+          <CircularProgressbarWithChildren
+            value={percentage}
+            background
+            backgroundPadding={6}
+            width="81px"
+            styles={buildStyles({
+              backgroundColor: "#52B6FF",
+              pathColor: "#fff",
+              trailColor: "transparent",
+            })}
+          >
+            <TextCicularProgress>Hoje</TextCicularProgress>
+          </CircularProgressbarWithChildren>
+        </Link>
+      </ProgressContainer>
+      <Link to="/historico">
+        <Option>Histórico</Option>
+      </Link>
     </MenuContainer>
   );
 }
@@ -48,6 +55,7 @@ const Option = styled.div`
   font-weight: 400;
   font-size: 18px;
   color: #52b6ff;
+  text-decoration: none;
   &:nth-child(1) {
     margin-left: 36px;
   }
@@ -63,7 +71,7 @@ const TextCicularProgress = styled.p`
   color: #ffffff;
 `;
 
-const Teste = styled.div`
+const ProgressContainer = styled.div`
   width: 91px;
   position: absolute;
   left: calc(50% - 40.5px);
