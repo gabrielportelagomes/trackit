@@ -11,7 +11,7 @@ function Menu() {
   return (
     <MenuContainer>
       <Link to="/habitos">
-        <Option>Hábitos</Option>
+        <HabitOption>Hábitos</HabitOption>
       </Link>
       <ProgressContainer>
         <Link to="/hoje">
@@ -31,7 +31,7 @@ function Menu() {
         </Link>
       </ProgressContainer>
       <Link to="/historico">
-        <Option>Histórico</Option>
+        <HistoryOption>Histórico</HistoryOption>
       </Link>
     </MenuContainer>
   );
@@ -50,18 +50,22 @@ const MenuContainer = styled.div`
   bottom: 0;
 `;
 
-const Option = styled.div`
+const HabitOption = styled.div`
   font-family: "Lexend Deca", sans-serif;
   font-weight: 400;
   font-size: 18px;
   color: #52b6ff;
   text-decoration: none;
-  &:nth-child(1) {
-    margin-left: 36px;
-  }
-  &:nth-child(3) {
-    margin-right: 31px;
-  }
+  margin-left: 36px;
+`;
+
+const HistoryOption = styled.div`
+  font-family: "Lexend Deca", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #52b6ff;
+  text-decoration: none;
+  margin-right: 31px;
 `;
 
 const TextCicularProgress = styled.p`
