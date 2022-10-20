@@ -3,11 +3,32 @@ import TopBar from "../../components/TopBar";
 import { useAuth } from "../../providers/auth";
 import LoadingPage from "../../assets/styles/LoadingPage";
 import Menu from "../../components/Menu";
+import URL from "../../constants/url";
+import { useEffect, useState } from "react";
+import { useHabits } from "../../providers/habits";
+import axios from "axios";
 
 function HabitsPage() {
   const { userLogin } = useAuth();
+  const { userHabits, setUserHabits } = useHabits();
+  const [addHabitButton, setAddHabitButton] = useState(false);
 
-  if (userLogin === undefined) {
+  useEffect(() => {
+    if (userLogin !== undefined) {
+      const promise = axios.get(`${URL}/habits`, {
+        headers: {
+          Authorization: `Bearer ${userLogin.token}`,
+        },
+      });
+
+      promise.then((response) => {
+        setUserHabits(response.data);
+      });
+      promise.catch((error) => console.log(error.response));
+    }
+  }, [userLogin]);
+
+  if (userLogin === undefined || userHabits === undefined) {
     return (
       <PageContainer>
         <LoadingPage />
@@ -15,27 +36,23 @@ function HabitsPage() {
     );
   }
 
+  function addHabit() {
+    setAddHabitButton(true);
+  }
+
+  function cancelAdd() {
+    setAddHabitButton(false);
+  }
+
   return (
     <PageContainer>
       <TopBar />
       <Heading>
         <Title>Meus hábitos</Title>
-        <AddButton>+</AddButton>
+        <AddButton onClick={addHabit}>+</AddButton>
       </Heading>
-      <HabitsContainer>
-        {/* <Habit>
-          <h3>Ler 1 capítulo de livro</h3>
-          <div>
-            <p>D</p>
-            <p>S</p>
-            <p>T</p>
-            <p>Q</p>
-            <p>Q</p>
-            <p>S</p>
-            <p>S</p>
-          </div>
-        </Habit> */}
-       {/*  <AddHabit>
+      {addHabitButton === true && (
+        <AddHabit>
           <NewHabit placeholder="nome do hábito"></NewHabit>
           <Weekdays>
             <Weekday>D</Weekday>
@@ -47,17 +64,35 @@ function HabitsPage() {
             <Weekday>S</Weekday>
           </Weekdays>
           <OptionsButtons>
-            <p>Cancelar</p>
+            <p onClick={cancelAdd}>Cancelar</p>
             <SaveButton>Salvar</SaveButton>
           </OptionsButtons>
-        </AddHabit> */}
-      </HabitsContainer>
-      <Report>
-        <p>
-          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-          começar a trackear!
-        </p>
-      </Report>
+        </AddHabit>
+      )}
+      {userHabits.length === 0 ? (
+        <Report>
+          <p>
+            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
+            começar a trackear!
+          </p>
+        </Report>
+      ) : (
+        <HabitsContainer>
+          <Habit>
+            <h3>Ler 1 capítulo de livro</h3>
+            <div>
+              <p>D</p>
+              <p>S</p>
+              <p>T</p>
+              <p>Q</p>
+              <p>Q</p>
+              <p>S</p>
+              <p>S</p>
+            </div>
+          </Habit>
+        </HabitsContainer>
+      )}
+
       <Menu />
     </PageContainer>
   );
@@ -113,7 +148,6 @@ const HabitsContainer = styled.div`
   margin-top: 20px;
   margin-left: 17px;
   overflow-y: auto;
-  /* display: none; */
   &::-webkit-scrollbar {
     display: none;
   }
@@ -162,8 +196,8 @@ const AddHabit = styled.div`
   height: 180px;
   background-color: #ffffff;
   border-radius: 5px;
-  margin-bottom: 10px;
-  position: relative;
+  margin-left: 17px;
+  margin-top: 20px;
 `;
 
 const NewHabit = styled.input`
@@ -215,6 +249,7 @@ const OptionsButtons = styled.div`
     font-size: 16px;
     color: #52b6ff;
     margin-right: 23px;
+    cursor: pointer;
   }
 `;
 
