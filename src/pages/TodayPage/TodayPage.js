@@ -3,13 +3,33 @@ import TopBar from "../../components/TopBar";
 import { useAuth } from "../../providers/auth";
 import LoadingPage from "../../assets/styles/LoadingPage";
 import Menu from "../../components/Menu";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import URL from "../../constants/url";
+import HabitToday from "../../components/HabitToday";
 
 function TodayPage() {
   const { userLogin } = useAuth();
   const percentage = 0; /* mudar parâmetro */
   const check = false; /* mudar parâmetro */
+  const [habitsToday, setHabitsToday] = useState(undefined);
 
-  if (userLogin === undefined) {
+  useEffect(() => {
+    if (userLogin !== undefined) {
+      axios
+        .get(`${URL}/habits/today`, {
+          headers: {
+            Authorization: `Bearer ${userLogin.token}`,
+          },
+        })
+        .then((response) => {
+          setHabitsToday(response.data);
+        })
+        .catch((error) => console.log(error.response));
+    }
+  }, [userLogin]);
+
+  if (userLogin === undefined || habitsToday === undefined) {
     return (
       <PageContainer>
         <LoadingPage />
@@ -31,20 +51,9 @@ function TodayPage() {
         )}
       </Heading>
       <HabitsContainer>
-        <Habit>
-          <h3>Ler 1 capítulo de livro</h3>
-          <div>
-            <p>
-              Sequência atual: <Current check={check}>1 dia</Current>{" "}
-              {/* tornar dinânico */}
-            </p>
-            <p>
-              Seu recorde: <Record check={check}>1 dia</Record>{" "}
-              {/* mudar parâmetro */}
-            </p>
-          </div>
-          <CheckButton></CheckButton>
-        </Habit>
+        {habitsToday.map((h, id) => (
+          <HabitToday key={id} habit={h} />
+        ))}
       </HabitsContainer>
       <Menu />
     </PageContainer>
@@ -91,52 +100,4 @@ const HabitsContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const Habit = styled.div`
-  width: 340px;
-  height: 94px;
-  background-color: #ffffff;
-  border: 1px solid #e7e7e7;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  position: relative;
-  h3 {
-    font-family: "Lexend Deca", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    color: #666666;
-    margin-left: 15px;
-    margin-top: 13px;
-  }
-  div {
-    margin-left: 15px;
-    margin-top: 7px;
-    p {
-      font-family: "Lexend Deca", sans-serif;
-      font-weight: 400;
-      font-size: 13px;
-      color: #666666;
-    }
-  }
-`;
-
-const Current = styled.span`
-  color: ${(props) => (props.check === false ? "#666666" : "#8fc549")};
-`;
-
-const Record = styled.span`
-  color: ${(props) =>
-    props.check === false ? "#666666" : "#8fc549"}; /* mudar condição */
-`;
-
-const CheckButton = styled.button`
-  width: 69px;
-  height: 69px;
-  background-color: #8fc549;
-  border: none;
-  border-radius: 5px;
-  position: absolute;
-  right: 13px;
-  top: 13px;
 `;
