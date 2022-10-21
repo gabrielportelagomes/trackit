@@ -52,33 +52,34 @@ function HabitsPage() {
         <Title>Meus hábitos</Title>
         <AddButton onClick={addHabit}>+</AddButton>
       </Heading>
-      {addHabitButton === true && (
-        <AddHabit
-          setAddHabitButton={setAddHabitButton}
-          userLogin={userLogin}
-          days={days}
-          setDays={setDays}
-          formNewHabit={formNewHabit}
-          setFormNewHabit={setFormNewHabit}
-          update={update}
-          setUpdate={setUpdate}
-        />
-      )}
-      {userHabits.length === 0 ? (
-        <Report>
-          <p>
-            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-            começar a trackear!
-          </p>
-        </Report>
-      ) : (
-        <HabitsContainer>
-          {userHabits.map((u, id) => (
-            <Habit key={id} habit={u} update={update} setUpdate={setUpdate} />
-          ))}
-        </HabitsContainer>
-      )}
-
+      <ScrollContainer>
+        {addHabitButton === true && (
+          <AddHabit
+            setAddHabitButton={setAddHabitButton}
+            userLogin={userLogin}
+            days={days}
+            setDays={setDays}
+            formNewHabit={formNewHabit}
+            setFormNewHabit={setFormNewHabit}
+            update={update}
+            setUpdate={setUpdate}
+          />
+        )}
+        {userHabits.length === 0 ? (
+          <Report>
+            <p>
+              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
+              para começar a trackear!
+            </p>
+          </Report>
+        ) : (
+          <HabitsContainer>
+            {userHabits.map((u, id) => (
+              <Habit key={id} habit={u} update={update} setUpdate={setUpdate} />
+            ))}
+          </HabitsContainer>
+        )}
+      </ScrollContainer>
       <Menu />
     </PageContainer>
   );
@@ -126,6 +127,14 @@ const AddButton = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+`;
+
+const ScrollContainer = styled.div`
+  max-height: 400px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const HabitsContainer = styled.div`

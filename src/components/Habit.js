@@ -103,7 +103,6 @@ const Weekday = styled.button`
   font-weight: 400;
   font-size: 20px;
   color: ${(props) => props.color};
-  cursor: pointer;
 `;
 
 const Delete = styled.div`
