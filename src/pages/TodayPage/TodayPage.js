@@ -8,15 +8,18 @@ import axios from "axios";
 import URL from "../../constants/url";
 import HabitToday from "../../components/HabitToday";
 import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
 
 function TodayPage() {
   const { userLogin } = useAuth();
-  const percentage = 0; /* mudar parâmetro */
-  const check = false; /* mudar parâmetro */
   const [habitsToday, setHabitsToday] = useState(undefined);
   const [update, setUpdate] = useState(false);
+  const [totalOfHabits, setTotalOfHabits] = useState(0);
+  const [habitsPerformed, setHabitsPerformed] = useState(0);
+  const percentage = parseInt(((habitsPerformed / totalOfHabits) * 100).toFixed(0));
   const today = dayjs().format("DD/MM");
-  /* const weekday = console.log(dayjs()); */
+  const day = dayjs().locale("pt-br").format("dddd");
+  const weekday = day[0].toUpperCase() + day.substring(1);
 
   useEffect(() => {
     if (userLogin !== undefined) {
@@ -28,10 +31,22 @@ function TodayPage() {
         })
         .then((response) => {
           setHabitsToday(response.data);
+          setTotalOfHabits(response.data.length);
+          habitCompleted(response.data);
         })
         .catch((error) => console.log(error.response));
     }
   }, [userLogin, update]);
+
+  function habitCompleted(habits) {
+    let newValue = 0;
+    habits.forEach((habit) => {
+      if (habit.done) {
+        newValue++;
+      }
+    });
+    setHabitsPerformed(newValue);
+  }
 
   if (userLogin === undefined || habitsToday === undefined) {
     return (
@@ -45,7 +60,9 @@ function TodayPage() {
     <PageContainer>
       <TopBar />
       <Heading>
-        <Day>Dia da semana, {today}</Day>
+        <Day>
+          {weekday}, {today}{" "}
+        </Day>
         {percentage === 0 ? (
           <Progress color={percentage}>Nenhum hábito concluído ainda</Progress>
         ) : (
@@ -56,10 +73,17 @@ function TodayPage() {
       </Heading>
       <HabitsContainer>
         {habitsToday.map((h, id) => (
-          <HabitToday key={id} habit={h}  update={update} setUpdate={setUpdate} />
+          <HabitToday
+            key={id}
+            habit={h}
+            update={update}
+            setUpdate={setUpdate}
+            habitsPerformed={habitsPerformed}
+            setHabitsPerformed={setHabitsPerformed}
+          />
         ))}
       </HabitsContainer>
-      <Menu />
+      <Menu percentage={percentage}/>
     </PageContainer>
   );
 }

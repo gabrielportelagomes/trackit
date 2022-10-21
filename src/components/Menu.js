@@ -6,8 +6,7 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
 
-function Menu() {
-  const percentage = 0;
+function Menu({ percentage }) {
   return (
     <MenuContainer>
       <Link to="/habitos">

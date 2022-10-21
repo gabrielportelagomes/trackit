@@ -25,6 +25,23 @@ function HabitToday({ habit, update, setUpdate }) {
         .catch((error) => {
           alert(error.response.data.message);
         });
+    } else {
+      const body = {};
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userLogin.token}`,
+        },
+      };
+
+      axios
+        .post(`${URL}/habits/${id}/uncheck`, body, config)
+        .then(() => {
+          setUpdate(!update);
+        })
+        .catch((error) => {
+          console.log(error.response);
+          alert(error.response.data.message);
+        });
     }
   }
 
@@ -36,15 +53,38 @@ function HabitToday({ habit, update, setUpdate }) {
     }
   }
 
+  function currentColor(done) {
+    if (done) {
+      return "#8fc549";
+    } else {
+      return "#666666";
+    }
+  }
+
+  function highestColor(highestSequence, currentSequence) {
+    if (highestSequence === currentSequence && highestSequence > 0) {
+      return "#8fc549";
+    } else {
+      return "#666666";
+    }
+  }
+
   return (
     <Habit>
       <h3>{name}</h3>
       <div>
         <p>
-          Sequência atual: <Current>{currentSequence} dia</Current>{" "}
+          Sequência atual:{" "}
+          <Current color={currentColor(done)}>
+            {currentSequence}
+            {currentSequence > 1 ? " dias" : " dia"}
+          </Current>{" "}
         </p>
         <p>
-          Seu recorde: <Record>{highestSequence} dia</Record>{" "}
+          Seu recorde:{" "}
+          <Record color={highestColor(highestSequence, currentSequence)}>
+            {highestSequence} {highestSequence > 1 ? " dias" : " dia"}
+          </Record>{" "}
         </p>
       </div>
       <CheckButton onClick={checkHabit} background={checkBacground(done)}>
@@ -85,12 +125,11 @@ const Habit = styled.div`
 `;
 
 const Current = styled.span`
-  color: ${(props) => (props.check === false ? "#666666" : "#8fc549")};
+  color: ${(props) => props.color};
 `;
 
 const Record = styled.span`
-  color: ${(props) =>
-    props.check === false ? "#666666" : "#8fc549"}; /* mudar condição */
+  color: ${(props) => props.color};
 `;
 
 const CheckButton = styled.button`
