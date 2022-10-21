@@ -47,7 +47,10 @@ function AddHabit({
           setAddHabitButton(false);
           setUpdate(!update);
         })
-        .catch((error) => console.log(error.response.data.message));
+        .catch((error) => {
+          alert(error.response.data.message);
+          setAddButton(false);
+        });
     } else {
       alert("Selecione ao menos um dia!");
     }
