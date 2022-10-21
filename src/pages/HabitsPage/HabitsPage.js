@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useHabits } from "../../providers/habits";
 import axios from "axios";
 import AddHabit from "../../components/AddHabit";
+import Habit from "../../components/Habit";
 
 function HabitsPage() {
   const { userLogin } = useAuth();
@@ -41,6 +42,8 @@ function HabitsPage() {
     setAddHabitButton(true);
   }
 
+  console.log(userHabits);
+
   return (
     <PageContainer>
       <TopBar />
@@ -60,18 +63,7 @@ function HabitsPage() {
         </Report>
       ) : (
         <HabitsContainer>
-          <Habit>
-            <h3>Ler 1 capítulo de livro</h3>
-            <Weekdays>
-              <Weekday>D</Weekday>
-              <p>S</p>
-              <p>T</p>
-              <p>Q</p>
-              <p>Q</p>
-              <p>S</p>
-              <p>S</p>
-            </Weekdays>
-          </Habit>
+          {userHabits.map((u, id) => <Habit key={id} habit={u}/>)}
         </HabitsContainer>
       )}
 
@@ -133,44 +125,6 @@ const HabitsContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const Habit = styled.div`
-  width: 340px;
-  height: 94px;
-  background-color: #ffffff;
-  border: 1px solid #e7e7e7;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  position: relative;
-  h3 {
-    font-family: "Lexend Deca", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    color: #666666;
-    margin-left: 15px;
-    margin-top: 13px;
-  }
-`;
-
-const Weekdays = styled.div`
-  display: flex;
-  margin-left: 19px;
-  margin-top: 8px;
-`;
-
-const Weekday = styled.button`
-  width: 30px;
-  height: 30px;
-  margin-right: 4px;
-  background-color: #ffffff;
-  border: 1px solid #d4d4d4;
-  border-radius: 5px;
-  font-family: "Lexend Deca", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  color: #dbdbdb;
-  cursor: pointer;
 `;
 
 const Report = styled.div`
