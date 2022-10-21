@@ -14,6 +14,9 @@ function HabitsPage() {
   const { userLogin } = useAuth();
   const { userHabits, setUserHabits } = useHabits();
   const [addHabitButton, setAddHabitButton] = useState(false);
+  const [days, setDays] = useState([]);
+  const [formNewHabit, setFormNewHabit] = useState({ name: "", days: [] });
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     if (userLogin !== undefined) {
@@ -28,7 +31,7 @@ function HabitsPage() {
       });
       promise.catch((error) => console.log(error.response));
     }
-  }, [userLogin]);
+  }, [userLogin, update]);
 
   if (userLogin === undefined || userHabits === undefined) {
     return (
@@ -42,8 +45,6 @@ function HabitsPage() {
     setAddHabitButton(true);
   }
 
-  console.log(userHabits);
-
   return (
     <PageContainer>
       <TopBar />
@@ -52,7 +53,16 @@ function HabitsPage() {
         <AddButton onClick={addHabit}>+</AddButton>
       </Heading>
       {addHabitButton === true && (
-        <AddHabit setAddHabitButton={setAddHabitButton} userLogin={userLogin} />
+        <AddHabit
+          setAddHabitButton={setAddHabitButton}
+          userLogin={userLogin}
+          days={days}
+          setDays={setDays}
+          formNewHabit={formNewHabit}
+          setFormNewHabit={setFormNewHabit}
+          update={update}
+          setUpdate={setUpdate}
+        />
       )}
       {userHabits.length === 0 ? (
         <Report>
@@ -63,7 +73,9 @@ function HabitsPage() {
         </Report>
       ) : (
         <HabitsContainer>
-          {userHabits.map((u, id) => <Habit key={id} habit={u}/>)}
+          {userHabits.map((u, id) => (
+            <Habit key={id} habit={u} update={update} setUpdate={setUpdate} />
+          ))}
         </HabitsContainer>
       )}
 

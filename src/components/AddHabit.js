@@ -1,16 +1,20 @@
 import axios from "axios";
-import { useState } from "react";
 import styled from "styled-components";
 import URL from "../constants/url";
 import WEEKDAYS from "../constants/weekdays";
 
-function AddHabit({ setAddHabitButton, userLogin }) {
-  const [days, setDays] = useState([]);
-  const [formNewHabit, setFormNewHabit] = useState({ name: "", days: [] });
-
+function AddHabit({
+  setAddHabitButton,
+  userLogin,
+  days,
+  setDays,
+  formNewHabit,
+  setFormNewHabit,
+  update,
+  setUpdate,
+}) {
   function cancelAdd() {
     setAddHabitButton(false);
-    setDays([]);
   }
 
   function handleForm(event) {
@@ -27,22 +31,20 @@ function AddHabit({ setAddHabitButton, userLogin }) {
       axios
         .post(`${URL}/habits`, body, {
           headers: {
-            Authorization: `Bearer ${userLogin.token}`
-          }
+            Authorization: `Bearer ${userLogin.token}`,
+          },
         })
-        .then((response) => {
+        .then(() => {
           setFormNewHabit({ name: "", days: [] });
           setDays([]);
           setAddHabitButton(false);
-          console.log(response.data);
+          setUpdate(!update);
         })
         .catch((error) => console.log(error.response.data.message));
     } else {
       alert("Selecione ao menos um dia!");
     }
   }
-
-  console.log(formNewHabit);
 
   function selectDay(id) {
     if (days.includes(id)) {
@@ -55,8 +57,6 @@ function AddHabit({ setAddHabitButton, userLogin }) {
       setDays(newList);
     }
   }
-
-  console.log(days);
 
   return (
     <FormAddHabit onSubmit={saveHabit}>

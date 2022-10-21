@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import WEEKDAYS from "../constants/weekdays";
 import { IoTrashOutline } from "react-icons/io5";
+import URL from "../constants/url";
+import axios from "axios";
+import { useAuth } from "../providers/auth";
 
-function Habit({ habit }) {
-  const { name, days } = habit;
+function Habit({ habit, update, setUpdate }) {
+  const { days, id, name } = habit;
+  const { userLogin } = useAuth();
 
   function dayBackground(id) {
     if (days.includes(id)) {
@@ -21,6 +25,25 @@ function Habit({ habit }) {
     }
   }
 
+  function deleteHabit() {
+    const confirmDelete = window.confirm("Confirme");
+    if (confirmDelete) {
+      axios
+        .delete(`${URL}/habits/${id}`, {
+          headers: {
+            Authorization: `Bearer ${userLogin.token}`,
+          },
+          data: {
+            id: id,
+          },
+        })
+        .then(() => {
+          setUpdate(!update);
+        })
+        .catch((error) => console.log(error.response.data.message));
+    }
+  }
+
   return (
     <HabitContainer>
       <h3>{name}</h3>
@@ -31,15 +54,13 @@ function Habit({ habit }) {
             id={id}
             background={dayBackground(id)}
             color={dayColor(id)}
-            /* onClick={() => selectDay(id)}
-            includes={days.includes(id)} */
           >
             {w}
           </Weekday>
         ))}
       </Weekdays>
       <Delete>
-        <IoTrashOutline />
+        <IoTrashOutline onClick={deleteHabit} />
       </Delete>
     </HabitContainer>
   );
@@ -91,4 +112,5 @@ const Delete = styled.div`
   position: absolute;
   right: 10px;
   top: 11px;
+  cursor: pointer;
 `;
