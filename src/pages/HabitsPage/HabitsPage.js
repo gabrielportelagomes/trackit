@@ -7,6 +7,7 @@ import URL from "../../constants/url";
 import { useEffect, useState } from "react";
 import { useHabits } from "../../providers/habits";
 import axios from "axios";
+import AddHabit from "../../components/AddHabit";
 
 function HabitsPage() {
   const { userLogin } = useAuth();
@@ -40,10 +41,6 @@ function HabitsPage() {
     setAddHabitButton(true);
   }
 
-  function cancelAdd() {
-    setAddHabitButton(false);
-  }
-
   return (
     <PageContainer>
       <TopBar />
@@ -52,22 +49,7 @@ function HabitsPage() {
         <AddButton onClick={addHabit}>+</AddButton>
       </Heading>
       {addHabitButton === true && (
-        <AddHabit>
-          <NewHabit placeholder="nome do hábito"></NewHabit>
-          <Weekdays>
-            <Weekday>D</Weekday>
-            <Weekday>S</Weekday>
-            <Weekday>T</Weekday>
-            <Weekday>Q</Weekday>
-            <Weekday>Q</Weekday>
-            <Weekday>S</Weekday>
-            <Weekday>S</Weekday>
-          </Weekdays>
-          <OptionsButtons>
-            <p onClick={cancelAdd}>Cancelar</p>
-            <SaveButton>Salvar</SaveButton>
-          </OptionsButtons>
-        </AddHabit>
+        <AddHabit setAddHabitButton={setAddHabitButton} userLogin={userLogin} />
       )}
       {userHabits.length === 0 ? (
         <Report>
@@ -80,15 +62,15 @@ function HabitsPage() {
         <HabitsContainer>
           <Habit>
             <h3>Ler 1 capítulo de livro</h3>
-            <div>
-              <p>D</p>
+            <Weekdays>
+              <Weekday>D</Weekday>
               <p>S</p>
               <p>T</p>
               <p>Q</p>
               <p>Q</p>
               <p>S</p>
               <p>S</p>
-            </div>
+            </Weekdays>
           </Habit>
         </HabitsContainer>
       )}
@@ -169,52 +151,6 @@ const Habit = styled.div`
     margin-left: 15px;
     margin-top: 13px;
   }
-  div {
-    display: flex;
-    margin-left: 14px;
-    margin-top: 8px;
-    p {
-      width: 30px;
-      height: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 4px;
-      background-color: #ffffff;
-      border: 1px solid #d4d4d4;
-      border-radius: 5px;
-      font-family: "Lexend Deca", sans-serif;
-      font-weight: 400;
-      font-size: 20px;
-      color: #dbdbdb;
-    }
-  }
-`;
-
-const AddHabit = styled.div`
-  width: 340px;
-  height: 180px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  margin-left: 17px;
-  margin-top: 20px;
-`;
-
-const NewHabit = styled.input`
-  width: 303px;
-  height: 45px;
-  margin-left: 19px;
-  margin-top: 18px;
-  border: 1px solid #d4d4d4;
-  border-radius: 5px;
-  padding: 11px;
-  font-family: "Lexend Deca", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  color: #666666;
-  &::placeholder {
-    color: #dbdbdb;
-  }
 `;
 
 const Weekdays = styled.div`
@@ -235,34 +171,6 @@ const Weekday = styled.button`
   font-size: 20px;
   color: #dbdbdb;
   cursor: pointer;
-`;
-
-const OptionsButtons = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 29px;
-  margin-right: 16px;
-  p {
-    font-family: "Lexend Deca", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    color: #52b6ff;
-    margin-right: 23px;
-    cursor: pointer;
-  }
-`;
-
-const SaveButton = styled.button`
-  width: 84px;
-  height: 35px;
-  background-color: #52b6ff;
-  border: none;
-  border-radius: 5px;
-  font-family: "Lexend Deca", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  color: #ffffff;
 `;
 
 const Report = styled.div`
