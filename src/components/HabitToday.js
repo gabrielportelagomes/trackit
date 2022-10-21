@@ -1,25 +1,53 @@
 import styled from "styled-components";
 import { FaCheck } from "react-icons/fa";
+import axios from "axios";
+import { useAuth } from "../providers/auth";
+import URL from "../constants/url";
 
-function HabitToday({ habit }) {
+function HabitToday({ habit, update, setUpdate }) {
   const { currentSequence, done, highestSequence, id, name } = habit;
+  const { userLogin } = useAuth();
+
+  function checkHabit() {
+    if (!done) {
+      const body = {};
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userLogin.token}`,
+        },
+      };
+
+      axios
+        .post(`${URL}/habits/${id}/check`, body, config)
+        .then(() => {
+          setUpdate(!update);
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    }
+  }
+
+  function checkBacground(done) {
+    if (done) {
+      return "#8fc549";
+    } else {
+      return "#ebebeb";
+    }
+  }
 
   return (
     <Habit>
       <h3>{name}</h3>
       <div>
         <p>
-          Sequência atual:{" "}
-          <Current /* check={check} */>{currentSequence} dia</Current>{" "}
-          {/* tornar dinânico */}
+          Sequência atual: <Current>{currentSequence} dia</Current>{" "}
         </p>
         <p>
-          Seu recorde:{" "}
-          <Record /* check={check} */>{highestSequence} dia</Record>{" "}
-          {/* mudar parâmetro */}
+          Seu recorde: <Record>{highestSequence} dia</Record>{" "}
         </p>
       </div>
-      <CheckButton done={done}>
+      <CheckButton onClick={checkHabit} background={checkBacground(done)}>
         <FaCheck />
       </CheckButton>
     </Habit>
@@ -68,8 +96,8 @@ const Record = styled.span`
 const CheckButton = styled.button`
   width: 69px;
   height: 69px;
-  background-color: #ebebeb;
-  border: 1px solid #e7e7e7;
+  background-color: ${(props) => props.background};
+  border: ${(props) => (props.done ? "none" : "1px solid #e7e7e7")};
   border-radius: 5px;
   position: absolute;
   right: 13px;

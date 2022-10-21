@@ -7,12 +7,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import URL from "../../constants/url";
 import HabitToday from "../../components/HabitToday";
+import dayjs from "dayjs";
 
 function TodayPage() {
   const { userLogin } = useAuth();
   const percentage = 0; /* mudar parâmetro */
   const check = false; /* mudar parâmetro */
   const [habitsToday, setHabitsToday] = useState(undefined);
+  const [update, setUpdate] = useState(false);
+  const today = dayjs().format("DD/MM");
+  /* const weekday = console.log(dayjs()); */
 
   useEffect(() => {
     if (userLogin !== undefined) {
@@ -27,7 +31,7 @@ function TodayPage() {
         })
         .catch((error) => console.log(error.response));
     }
-  }, [userLogin]);
+  }, [userLogin, update]);
 
   if (userLogin === undefined || habitsToday === undefined) {
     return (
@@ -41,7 +45,7 @@ function TodayPage() {
     <PageContainer>
       <TopBar />
       <Heading>
-        <Day>Dia da semana, XX/XX</Day>
+        <Day>Dia da semana, {today}</Day>
         {percentage === 0 ? (
           <Progress color={percentage}>Nenhum hábito concluído ainda</Progress>
         ) : (
@@ -52,7 +56,7 @@ function TodayPage() {
       </Heading>
       <HabitsContainer>
         {habitsToday.map((h, id) => (
-          <HabitToday key={id} habit={h} />
+          <HabitToday key={id} habit={h}  update={update} setUpdate={setUpdate} />
         ))}
       </HabitsContainer>
       <Menu />
