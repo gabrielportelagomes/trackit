@@ -57,16 +57,14 @@ function AddHabit({
   }
 
   function selectDay(id) {
-    if (!addButton) {
-      if (days.includes(id)) {
-        const newList = days.filter((d) => {
-          return d !== id;
-        });
-        setDays(newList);
-      } else {
-        const newList = [...days, id];
-        setDays(newList);
-      }
+    if (days.includes(id)) {
+      const newList = days.filter((d) => {
+        return d !== id;
+      });
+      setDays(newList);
+    } else {
+      const newList = [...days, id];
+      setDays(newList);
     }
   }
 
@@ -98,6 +96,7 @@ function AddHabit({
             includes={days.includes(id)}
             type="button"
             cursor={dayCursor(addButton)}
+            disabled={addButton}
           >
             {w}
           </Weekday>
