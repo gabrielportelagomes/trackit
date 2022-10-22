@@ -70,13 +70,16 @@ export default Habit;
 
 const HabitContainer = styled.div`
   width: 340px;
-  height: 91px;
+  min-height: 91px;
   background-color: #ffffff;
   border: 1px solid #e7e7e7;
   border-radius: 5px;
   margin-bottom: 10px;
   position: relative;
   h3 {
+    max-width: 234px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     font-family: "Lexend Deca", sans-serif;
     font-weight: 400;
     font-size: 20px;
@@ -90,6 +93,7 @@ const Weekdays = styled.div`
   display: flex;
   margin-left: 19px;
   margin-top: 8px;
+  margin-bottom: 15px;
 `;
 
 const Weekday = styled.button`

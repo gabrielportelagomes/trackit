@@ -96,6 +96,7 @@ function AddHabit({
             id={id}
             onClick={() => selectDay(id)}
             includes={days.includes(id)}
+            type="button"
             cursor={dayCursor(addButton)}
           >
             {w}
@@ -157,7 +158,7 @@ const Weekdays = styled.div`
   margin-top: 8px;
 `;
 
-const Weekday = styled.div`
+const Weekday = styled.button`
   width: 30px;
   height: 30px;
   display: flex;
