@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import trackit from "../../assets/images/trackit.png";
@@ -11,7 +11,13 @@ function LoginPage() {
   const [loginButton, setLoginButton] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-  const { setUserLogin } = useAuth();
+  const { setUserLogin, userLogin } = useAuth();
+
+  useEffect(() => {
+    if (userLogin !== undefined) {
+      navigate("/hoje");
+    }
+  }, [userLogin]);
 
   function handleForm(event) {
     const { name, value } = event.target;
