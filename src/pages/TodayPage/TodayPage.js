@@ -9,17 +9,24 @@ import URL from "../../constants/url";
 import HabitToday from "../../components/HabitToday";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
+import { useProgress } from "../../providers/progress";
 
 function TodayPage() {
   const { userLogin } = useAuth();
+  const {
+    totalOfHabits,
+    setTotalOfHabits,
+    habitsPerformed,
+    setHabitsPerformed,
+  } = useProgress();
   const [habitsToday, setHabitsToday] = useState(undefined);
   const [update, setUpdate] = useState(false);
-  const [totalOfHabits, setTotalOfHabits] = useState(0);
-  const [habitsPerformed, setHabitsPerformed] = useState(0);
-  const percentage = parseInt(((habitsPerformed / totalOfHabits) * 100).toFixed(0));
   const today = dayjs().format("DD/MM");
   const day = dayjs().locale("pt-br").format("dddd");
   const weekday = day[0].toUpperCase() + day.substring(1);
+  const percentage = parseInt(
+    ((habitsPerformed / totalOfHabits) * 100).toFixed(0)
+  );
 
   useEffect(() => {
     if (userLogin !== undefined) {
@@ -83,7 +90,7 @@ function TodayPage() {
           />
         ))}
       </HabitsContainer>
-      <Menu percentage={percentage}/>
+      <Menu />
     </PageContainer>
   );
 }

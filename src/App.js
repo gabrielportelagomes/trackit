@@ -8,22 +8,25 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import TodayPage from "./pages/TodayPage/TodayPage";
 import { AuthProvider } from "./providers/auth";
 import { HabitsProvider } from "./providers/habits";
+import { ProgressProvider } from "./providers/progress";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <HabitsProvider>
-          <GlobalStyle />
-          <ScreenContainer>
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              <Route path="/cadastro" element={<SignUpPage />} />
-              <Route path="/hoje" element={<TodayPage />} />
-              <Route path="/habitos" element={<HabitsPage />} />
-              <Route path="/historico" element={<HistoryPage />} />
-            </Routes>
-          </ScreenContainer>
+          <ProgressProvider>
+            <GlobalStyle />
+            <ScreenContainer>
+              <Routes>
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/cadastro" element={<SignUpPage />} />
+                <Route path="/hoje" element={<TodayPage />} />
+                <Route path="/habitos" element={<HabitsPage />} />
+                <Route path="/historico" element={<HistoryPage />} />
+              </Routes>
+            </ScreenContainer>
+          </ProgressProvider>
         </HabitsProvider>
       </AuthProvider>
     </BrowserRouter>

@@ -5,8 +5,14 @@ import {
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
+import { useProgress } from "../providers/progress";
 
-function Menu({ percentage }) {
+function Menu() {
+  const { totalOfHabits, habitsPerformed } = useProgress();
+  const percentage = parseInt(
+    ((habitsPerformed / totalOfHabits) * 100).toFixed(0)
+  );
+
   return (
     <MenuContainer>
       <Link to="/habitos">
