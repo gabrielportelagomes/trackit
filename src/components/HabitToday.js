@@ -71,22 +71,24 @@ function HabitToday({ habit, update, setUpdate }) {
 
   return (
     <Habit>
-      <h3>{name}</h3>
-      <div>
-        <p>
-          Sequência atual:{" "}
-          <Current color={currentColor(done)}>
-            {currentSequence}
-            {currentSequence > 1 ? " dias" : " dia"}
-          </Current>{" "}
-        </p>
-        <p>
-          Seu recorde:{" "}
-          <Record color={highestColor(highestSequence, currentSequence)}>
-            {highestSequence} {highestSequence > 1 ? " dias" : " dia"}
-          </Record>{" "}
-        </p>
-      </div>
+      <HabitInfos>
+        <h3>{name}</h3>
+        <div>
+          <p>
+            Sequência atual:{" "}
+            <Current color={currentColor(done)}>
+              {currentSequence}
+              {currentSequence > 1 ? " dias" : " dia"}
+            </Current>{" "}
+          </p>
+          <p>
+            Seu recorde:{" "}
+            <Record color={highestColor(highestSequence, currentSequence)}>
+              {highestSequence} {highestSequence > 1 ? " dias" : " dia"}
+            </Record>{" "}
+          </p>
+        </div>
+      </HabitInfos>
       <CheckButton onClick={checkHabit} background={checkBacground(done)}>
         <FaCheck />
       </CheckButton>
@@ -98,13 +100,21 @@ export default HabitToday;
 
 const Habit = styled.div`
   width: 340px;
-  height: 94px;
+  min-height: 94px;
   background-color: #ffffff;
   border: 1px solid #e7e7e7;
   border-radius: 5px;
   margin-bottom: 10px;
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const HabitInfos = styled.div`
   h3 {
+    max-width: 208px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     font-family: "Lexend Deca", sans-serif;
     font-weight: 400;
     font-size: 20px;
@@ -115,6 +125,7 @@ const Habit = styled.div`
   div {
     margin-left: 15px;
     margin-top: 7px;
+    margin-bottom: 26px;
     p {
       font-family: "Lexend Deca", sans-serif;
       font-weight: 400;
@@ -138,9 +149,7 @@ const CheckButton = styled.button`
   background-color: ${(props) => props.background};
   border: ${(props) => (props.done ? "none" : "1px solid #e7e7e7")};
   border-radius: 5px;
-  position: absolute;
-  right: 13px;
-  top: 13px;
+  margin-right: 13px;
   font-size: 35px;
   color: #ffffff;
   cursor: pointer;
