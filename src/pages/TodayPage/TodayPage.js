@@ -21,9 +21,8 @@ function TodayPage() {
   } = useProgress();
   const [habitsToday, setHabitsToday] = useState(undefined);
   const [update, setUpdate] = useState(false);
-  const today = dayjs().format("DD/MM");
-  const day = dayjs().locale("pt-br").format("dddd");
-  const weekday = day[0].toUpperCase() + day.substring(1);
+  const today = dayjs().locale("pt-br").format("dddd, DD/MM");
+  const day = today[0].toUpperCase() + today.substring(1);
   const percentage = parseInt(
     ((habitsPerformed / totalOfHabits) * 100).toFixed(0)
   );
@@ -68,7 +67,7 @@ function TodayPage() {
       <TopBar />
       <Heading>
         <Day>
-          {weekday}, {today}{" "}
+          {day}
         </Day>
         {percentage === 0 ? (
           <Progress color={percentage}>Nenhum hábito concluído ainda</Progress>
