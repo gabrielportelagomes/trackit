@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import HabitsPage from "./pages/HabitsPage/HabitsPage";
+import HistoryDayPage from "./pages/HistoryDayPage/HistoryDayPage";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/hoje" element={<TodayPage />} />
                 <Route path="/habitos" element={<HabitsPage />} />
                 <Route path="/historico" element={<HistoryPage />} />
+                <Route path="/historico_do_dia" element={<HistoryDayPage />} />
               </Routes>
             </ScreenContainer>
           </ProgressProvider>

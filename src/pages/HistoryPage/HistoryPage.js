@@ -4,13 +4,19 @@ import { useAuth } from "../../providers/auth";
 import LoadingPage from "../../assets/styles/LoadingPage";
 import Menu from "../../components/Menu";
 import Calendar from "react-calendar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import URL from "../../constants/url";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import { useNavigate } from "react-router-dom";
 /* import 'react-calendar/dist/Calendar.css'; */
 
 function HistoryPage() {
   const { userLogin } = useAuth();
+  const [value, onChange] = useState(new Date());
+  const [history, setHistory] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userLogin !== undefined) {
@@ -21,11 +27,24 @@ function HistoryPage() {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          setHistory(response.data);
         })
         .catch((error) => console.log(error.response));
     }
   }, [userLogin]);
+
+  function changeFormat() {
+    return (locale, date) => dayjs(date).locale("pt-br").format("DD");
+  }
+
+  function selectedDay(value) {
+    console.log(history);
+    history.forEach((history) => {
+      if (history.day === dayjs(value).locale("pt-br").format("DD/MM/YYYY")) {
+        navigate("/historico_do_dia")
+      }
+    });
+  }
 
   if (userLogin === undefined) {
     return (
@@ -47,7 +66,13 @@ function HistoryPage() {
         </p>
       </Report> */}
       <CalendarContainer>
-        <Calendar />
+        <Calendar
+          /* formatDay={(locale, date) => dayjs(date).locale("pt-br").format("DD")} */
+          onChange={onChange}
+          value={value}
+          formatDay={changeFormat()}
+          onClickDay={(day) => selectedDay(day)}
+        />
       </CalendarContainer>
       <Menu />
     </PageContainer>
@@ -200,10 +225,10 @@ const CalendarContainer = styled.div`
   .react-calendar__tile--hasActive:enabled:focus {
     background: #a9d4ff;
   }
-  .react-calendar__tile--active {
+  /* .react-calendar__tile--active {
     background: #006edc;
     color: white;
-  }
+  } */
   .react-calendar__tile--active:enabled:hover,
   .react-calendar__tile--active:enabled:focus {
     background: #1087ff;
