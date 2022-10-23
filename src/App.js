@@ -9,6 +9,7 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import TodayPage from "./pages/TodayPage/TodayPage";
 import { AuthProvider } from "./providers/auth";
 import { HabitsProvider } from "./providers/habits";
+import { HistoryDayProvider } from "./providers/historyDay";
 import { ProgressProvider } from "./providers/progress";
 
 function App() {
@@ -17,17 +18,22 @@ function App() {
       <AuthProvider>
         <HabitsProvider>
           <ProgressProvider>
-            <GlobalStyle />
-            <ScreenContainer>
-              <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route path="/cadastro" element={<SignUpPage />} />
-                <Route path="/hoje" element={<TodayPage />} />
-                <Route path="/habitos" element={<HabitsPage />} />
-                <Route path="/historico" element={<HistoryPage />} />
-                <Route path="/historico_do_dia" element={<HistoryDayPage />} />
-              </Routes>
-            </ScreenContainer>
+            <HistoryDayProvider>
+              <GlobalStyle />
+              <ScreenContainer>
+                <Routes>
+                  <Route path="/" element={<LoginPage />} />
+                  <Route path="/cadastro" element={<SignUpPage />} />
+                  <Route path="/hoje" element={<TodayPage />} />
+                  <Route path="/habitos" element={<HabitsPage />} />
+                  <Route path="/historico" element={<HistoryPage />} />
+                  <Route
+                    path="/historico_do_dia"
+                    element={<HistoryDayPage />}
+                  />
+                </Routes>
+              </ScreenContainer>
+            </HistoryDayProvider>
           </ProgressProvider>
         </HabitsProvider>
       </AuthProvider>

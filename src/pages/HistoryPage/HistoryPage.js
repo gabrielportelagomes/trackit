@@ -10,12 +10,14 @@ import URL from "../../constants/url";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import { useNavigate } from "react-router-dom";
+import { useHistoryDay } from "../../providers/historyDay";
 /* import 'react-calendar/dist/Calendar.css'; */
 
 function HistoryPage() {
   const { userLogin } = useAuth();
+  const { setHistoryDay } = useHistoryDay();
   const [value, onChange] = useState(new Date());
-  const [history, setHistory] = useState([]);
+  const [fullHistory, setFullHistory] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +29,7 @@ function HistoryPage() {
           },
         })
         .then((response) => {
-          setHistory(response.data);
+          setFullHistory(response.data);
         })
         .catch((error) => console.log(error.response));
     }
@@ -37,11 +39,11 @@ function HistoryPage() {
     return (locale, date) => dayjs(date).locale("pt-br").format("DD");
   }
 
-  function selectedDay(value) {
-    console.log(history);
-    history.forEach((history) => {
+  function selectedHistoryDay(value) {
+    fullHistory.forEach((history) => {
       if (history.day === dayjs(value).locale("pt-br").format("DD/MM/YYYY")) {
-        navigate("/historico_do_dia")
+        setHistoryDay(history);
+        navigate("/historico_do_dia");
       }
     });
   }
@@ -71,7 +73,7 @@ function HistoryPage() {
           onChange={onChange}
           value={value}
           formatDay={changeFormat()}
-          onClickDay={(day) => selectedDay(day)}
+          onClickDay={(day) => selectedHistoryDay(day)}
         />
       </CalendarContainer>
       <Menu />
