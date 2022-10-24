@@ -4,10 +4,12 @@ import { IoTrashOutline } from "react-icons/io5";
 import URL from "../constants/url";
 import axios from "axios";
 import { useAuth } from "../providers/auth";
+import { useProgress } from "../providers/progress";
 
 function Habit({ habit, update, setUpdate }) {
   const { days, id, name } = habit;
   const { userLogin } = useAuth();
+  const { change, setChange } = useProgress();
 
   function dayBackground(id) {
     if (days.includes(id)) {
@@ -39,6 +41,7 @@ function Habit({ habit, update, setUpdate }) {
         })
         .then(() => {
           setUpdate(!update);
+          setChange(!change);
         })
         .catch((error) => console.log(error.response.data.message));
     }
