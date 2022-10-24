@@ -48,6 +48,26 @@ function HistoryPage() {
     });
   }
 
+  function dayTag(date) {
+    let label = "";
+    const day = dayjs(date).locale("pt-br").format("DD/MM/YYYY");
+    if (day === dayjs().locale("pt-br").format("DD/MM/YYYY")) {
+      label = "";
+    } else {
+      fullHistory.forEach((history) => {
+        if (history.day === day) {
+          label = "success";
+          history.habits.forEach((habit) => {
+            if (!habit.done) {
+              label = "fail";
+            }
+          });
+        }
+      });
+    }
+    return label;
+  }
+
   if (userLogin === undefined) {
     return (
       <PageContainer>
@@ -74,6 +94,7 @@ function HistoryPage() {
           value={value}
           formatDay={changeFormat()}
           onClickDay={(day) => selectedHistoryDay(day)}
+          tileClassName={({ date }) => dayTag(date)}
         />
       </CalendarContainer>
       <Menu />
@@ -237,5 +258,15 @@ const CalendarContainer = styled.div`
   }
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
+  }
+
+  .fail {
+    background-color: #ea5766;
+    border-radius: 50%;
+  }
+
+  .success {
+    background-color: #8cc654;
+    border-radius: 50%;
   }
 `;
