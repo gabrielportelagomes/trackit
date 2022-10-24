@@ -6,12 +6,48 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
 import { useProgress } from "../providers/progress";
+import { useAuth } from "../providers/auth";
+import axios from "axios";
+import { useEffect } from "react";
+import URL from "../constants/url";
 
 function Menu() {
-  const { totalOfHabits, habitsPerformed } = useProgress();
+  const {
+    totalOfHabits,
+    setTotalOfHabits,
+    habitsPerformed,
+    setHabitsPerformed,
+  } = useProgress();
   const percentage = parseInt(
     ((habitsPerformed / totalOfHabits) * 100).toFixed(0)
   );
+  const { userLogin } = useAuth();
+
+  useEffect(() => {
+    if (userLogin !== undefined) {
+      axios
+        .get(`${URL}/habits/today`, {
+          headers: {
+            Authorization: `Bearer ${userLogin.token}`,
+          },
+        })
+        .then((response) => {
+          setTotalOfHabits(response.data.length);
+          habitCompleted(response.data);
+        })
+        .catch((error) => console.log(error.response));
+    }
+  }, [userLogin]);
+
+  function habitCompleted(habits) {
+    let newValue = 0;
+    habits.forEach((habit) => {
+      if (habit.done) {
+        newValue++;
+      }
+    });
+    setHabitsPerformed(newValue);
+  }
 
   return (
     <MenuContainer>
