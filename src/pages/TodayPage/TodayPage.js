@@ -66,9 +66,7 @@ function TodayPage() {
     <PageContainer>
       <TopBar />
       <Heading>
-        <Day>
-          {day}
-        </Day>
+        <Day>{day}</Day>
         {percentage === 0 ? (
           <Progress color={percentage}>Nenhum hábito concluído ainda</Progress>
         ) : (
@@ -126,6 +124,7 @@ const Progress = styled.p`
 `;
 
 const HabitsContainer = styled.div`
+  max-height: 400px;
   align-items: center;
   margin-top: 28px;
   margin-bottom: 111px;

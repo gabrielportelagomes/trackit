@@ -180,6 +180,7 @@ const OptionsButtons = styled.div`
   align-items: center;
   margin-top: 29px;
   margin-right: 16px;
+  margin-bottom: 15px;
   p {
     font-family: "Lexend Deca", sans-serif;
     font-weight: 400;
