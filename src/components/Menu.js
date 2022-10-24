@@ -17,6 +17,7 @@ function Menu() {
     setTotalOfHabits,
     habitsPerformed,
     setHabitsPerformed,
+    change,
   } = useProgress();
   const percentage = parseInt(
     ((habitsPerformed / totalOfHabits) * 100).toFixed(0)
@@ -37,7 +38,7 @@ function Menu() {
         })
         .catch((error) => console.log(error.response));
     }
-  }, [userLogin]);
+  }, [userLogin, change]);
 
   function habitCompleted(habits) {
     let newValue = 0;

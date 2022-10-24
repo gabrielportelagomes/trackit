@@ -4,6 +4,7 @@ import styled from "styled-components";
 import URL from "../constants/url";
 import WEEKDAYS from "../constants/weekdays";
 import Loading from "../assets/styles/Loading";
+import { useProgress } from "../providers/progress";
 
 function AddHabit({
   setAddHabitButton,
@@ -16,6 +17,7 @@ function AddHabit({
   setUpdate,
 }) {
   const [addButton, setAddButton] = useState(false);
+  const { change, setChange } = useProgress();
 
   function cancelAdd() {
     if (!addButton) {
@@ -46,6 +48,7 @@ function AddHabit({
           setDays([]);
           setAddHabitButton(false);
           setUpdate(!update);
+          setChange(!change);
         })
         .catch((error) => {
           alert(error.response.data.message);
