@@ -55,6 +55,7 @@ function LoginPage() {
           placeholder="email"
           disabled={loginButton}
           required
+          data-identifier="input-email"
         ></Input>
         <Input
           name="password"
@@ -64,9 +65,10 @@ function LoginPage() {
           placeholder="senha"
           disabled={loginButton}
           required
+          data-identifier="input-password"
         ></Input>
         {loginButton === false ? (
-          <Button type="submit" disabled={loginButton}>
+          <Button type="submit" disabled={loginButton} data-identifier="login-btn">
             Entrar
           </Button>
         ) : (
@@ -77,7 +79,7 @@ function LoginPage() {
       </FormContainer>
       {loginButton === false ? (
         <Link to="/cadastro">
-          <SignInText>Não tem uma conta? Cadastre-se!</SignInText>
+          <SignInText data-identifier="sign-up-action">Não tem uma conta? Cadastre-se!</SignInText>
         </Link>
       ) : (
         <SignInText>Não tem uma conta? Cadastre-se!</SignInText>

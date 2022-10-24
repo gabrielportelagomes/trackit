@@ -53,7 +53,7 @@ function Menu() {
   return (
     <MenuContainer>
       <Link to="/habitos">
-        <HabitOption>Hábitos</HabitOption>
+        <HabitOption data-identifier="habit-page-action">Hábitos</HabitOption>
       </Link>
       <ProgressContainer>
         <Link to="/hoje">
@@ -73,7 +73,7 @@ function Menu() {
         </Link>
       </ProgressContainer>
       <Link to="/historico">
-        <HistoryOption>Histórico</HistoryOption>
+        <HistoryOption data-identifier="historic-page-action">Histórico</HistoryOption>
       </Link>
     </MenuContainer>
   );

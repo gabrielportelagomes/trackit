@@ -58,6 +58,7 @@ function SignUpPage() {
           placeholder="email"
           disabled={signUpButton}
           required
+          data-identifier="input-email"
         ></Input>
         <Input
           name="password"
@@ -67,6 +68,7 @@ function SignUpPage() {
           placeholder="senha"
           disabled={signUpButton}
           required
+          data-identifier="input-password"
         ></Input>
         <Input
           name="name"
@@ -76,6 +78,7 @@ function SignUpPage() {
           placeholder="nome"
           disabled={signUpButton}
           required
+          data-identifier="input-name"
         ></Input>
         <Input
           name="image"
@@ -85,6 +88,7 @@ function SignUpPage() {
           placeholder="foto"
           disabled={signUpButton}
           required
+          data-identifier="input-photo"
         ></Input>
         {signUpButton === false ? (
           <Button type="submit" disabled={signUpButton}>
@@ -98,7 +102,7 @@ function SignUpPage() {
       </FormContainer>
       {signUpButton === false ? (
         <Link to="/">
-          <LogInText>Já tem uma conta? Faça login!</LogInText>
+          <LogInText data-identifier="back-to-login-action">Já tem uma conta? Faça login!</LogInText>
         </Link>
       ) : (
         <LogInText>Já tem uma conta? Faça login!</LogInText>

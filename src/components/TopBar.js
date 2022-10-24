@@ -7,7 +7,7 @@ function TopBar() {
   return (
     <TopContainer>
       <Logo>TracKIt</Logo>
-      <ProfilePicture src={userLogin.image} alt="Profile picture" />
+      <ProfilePicture src={userLogin.image} alt="Profile picture" data-identifier="avatar"/>
     </TopContainer>
   );
 }

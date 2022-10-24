@@ -71,7 +71,7 @@ function HabitToday({ habit, update, setUpdate }) {
 
   return (
     <Habit>
-      <HabitInfos>
+      <HabitInfos data-identifier="today-infos">
         <h3>{name}</h3>
         <div>
           <p>
@@ -89,7 +89,7 @@ function HabitToday({ habit, update, setUpdate }) {
           </p>
         </div>
       </HabitInfos>
-      <CheckButton onClick={checkHabit} background={checkBacground(done)}>
+      <CheckButton onClick={checkHabit} background={checkBacground(done)} data-identifier="done-habit-btn">
         <FaCheck />
       </CheckButton>
     </Habit>

@@ -46,7 +46,7 @@ function Habit({ habit, update, setUpdate }) {
 
   return (
     <HabitContainer>
-      <h3>{name}</h3>
+      <h3 data-identifier="habit-name">{name}</h3>
       <Weekdays>
         {WEEKDAYS.map((w, id) => (
           <Weekday
@@ -60,7 +60,7 @@ function Habit({ habit, update, setUpdate }) {
         ))}
       </Weekdays>
       <Delete>
-        <IoTrashOutline onClick={deleteHabit} />
+        <IoTrashOutline onClick={deleteHabit} data-identifier="delete-habit-btn"/>
       </Delete>
     </HabitContainer>
   );

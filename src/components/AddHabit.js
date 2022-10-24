@@ -89,6 +89,7 @@ function AddHabit({
         placeholder="nome do hábito"
         disabled={addButton}
         required
+        data-identifier="input-habit-name"
       ></NewHabit>
       <Weekdays>
         {WEEKDAYS.map((w, id) => (
@@ -100,15 +101,16 @@ function AddHabit({
             type="button"
             cursor={dayCursor(addButton)}
             disabled={addButton}
+            data-identifier="week-day-btn"
           >
             {w}
           </Weekday>
         ))}
       </Weekdays>
       <OptionsButtons>
-        <p onClick={cancelAdd}>Cancelar</p>
+        <p onClick={cancelAdd} data-identifier="cancel-habit-create-btn">Cancelar</p>
         {addButton === false ? (
-          <SaveButton type="submit" disabled={addButton}>
+          <SaveButton type="submit" disabled={addButton} data-identifier="save-habit-create-btn">
             Salvar
           </SaveButton>
         ) : (

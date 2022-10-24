@@ -50,7 +50,7 @@ function HabitsPage() {
       <TopBar />
       <Heading>
         <Title>Meus hábitos</Title>
-        <AddButton onClick={addHabit}>+</AddButton>
+        <AddButton onClick={addHabit} data-identifier="create-habit-btn">+</AddButton>
       </Heading>
       {addHabitButton === true && (
         <AddHabit
@@ -66,7 +66,7 @@ function HabitsPage() {
       )}
       {userHabits.length === 0 ? (
         <Report>
-          <p>
+          <p data-identifier="no-habit-message">
             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
             começar a trackear!
           </p>

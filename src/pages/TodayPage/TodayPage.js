@@ -66,11 +66,11 @@ function TodayPage() {
     <PageContainer>
       <TopBar />
       <Heading>
-        <Day>{day}</Day>
+        <Day data-identifier="today-infos">{day}</Day>
         {percentage === 0 ? (
           <Progress color={percentage}>Nenhum hábito concluído ainda</Progress>
         ) : (
-          <Progress color={percentage}>
+          <Progress color={percentage} data-identifier="today-infos">
             {percentage}% dos hábitos concluídos
           </Progress>
         )}
